@@ -7,6 +7,8 @@ use glutin::{dpi, event_loop::EventLoop};
 use std::{fs, path::Path, rc::Rc, time};
 
 fn main() {
+    env_logger::Builder::from_env(env_logger::Env::default().default_filter_or("debug")).init();
+
     let settings = Settings {
         mode: Mode::Normal,
         fluid_size: 128,
