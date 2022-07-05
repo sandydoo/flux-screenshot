@@ -1,0 +1,17 @@
+[package]
+name = "flux-screenshot"
+version = "0.1.0"
+edition = "2021"
+
+# See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
+
+[dependencies]
+image = "0.24"
+glow = "0.11.2"
+glutin = "0.28"
+serde_json = "1"
+
+[dependencies.flux]
+version = "4"
+path = "../flux/flux"
+
