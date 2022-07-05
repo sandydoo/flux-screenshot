@@ -4,6 +4,7 @@ use flux::{
 };
 use glow::HasContext;
 use glutin::{dpi, event_loop::EventLoop};
+use std::ops::AddAssign;
 use std::{fs, path::Path, rc::Rc, time};
 
 fn main() {
@@ -89,15 +90,21 @@ fn main() {
         (renderbuffer, framebuffer)
     };
 
-    let time = time::Instant::now();
-    let capture_time = time::Duration::from_secs(5);
+    let start = time::Instant::now();
+    let mut now = time::Instant::now();
+    let capture_time = time::Duration::from_millis(4_500);
 
-    while time.elapsed() < capture_time {
+    while now.duration_since(start) < capture_time {
+        println!("{:.3}", now.duration_since(start).as_secs_f64());
         unsafe {
             gl.bind_framebuffer(glow::FRAMEBUFFER, Some(framebuffer));
         }
-        flux.animate(time.elapsed().as_millis() as f64);
-        println!("{:.3}", (time.elapsed().as_millis() as f64) / 1000.0);
+        flux.animate(now.duration_since(start).as_secs_f64() * 1000.0);
+        unsafe {
+            gl.finish();
+        }
+        // TODO: this value has to be small, otherwise we get a black screen. Why?
+        now.add_assign(time::Duration::from_millis(5));
     }
 
     let mut pixels: Vec<u8> =
