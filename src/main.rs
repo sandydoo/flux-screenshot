@@ -74,7 +74,7 @@ fn main() {
         gl.bind_renderbuffer(glow::RENDERBUFFER, Some(renderbuffer));
         gl.renderbuffer_storage(
             glow::RENDERBUFFER,
-            glow::RGBA8,
+            glow::SRGB8,
             physical_size.width as _,
             physical_size.height as _,
         );
